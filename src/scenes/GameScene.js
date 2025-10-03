@@ -15,10 +15,11 @@ export class GameScene extends Phaser.Scene {
         this.basketGlow = this.basket.postFX.addGlow(0xffffff, 3, 0);
 
         // input
+        this.targetX = this.basket.x;
         this.cursorKeys = this.input.keyboard.createCursorKeys();
-        this.input.on('pointermove', (pointer) =>{
-                    this.basket.body.x = pointer.x - this.basket.width /2;
-                });
+        this.input.on('pointermove', (pointer) => {
+        this.targetX = pointer.x;
+        });
         
         // create candy group
         this.candyFrames = this.textures.get('candy').getFrameNames();
@@ -75,7 +76,8 @@ export class GameScene extends Phaser.Scene {
         } else if (this.cursorKeys.right.isDown) {
             this.basket.setVelocityX(450);
         } else {
-            this.basket.setVelocityX(0);
+        const delta = this.targetX - this.basket.x;
+        this.basket.setVelocityX(delta * 10);
         }
 
         this.candyGroup.getChildren().forEach((child) => {
