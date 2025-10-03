@@ -16,6 +16,9 @@ export class GameScene extends Phaser.Scene {
 
         // input
         this.cursorKeys = this.input.keyboard.createCursorKeys();
+        this.input.on('pointermove', (pointer) =>{
+                    this.basket.x = pointer.x;
+                });
         
         // create candy group
         this.candyFrames = this.textures.get('candy').getFrameNames();
