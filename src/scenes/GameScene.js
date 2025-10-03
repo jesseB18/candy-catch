@@ -17,7 +17,7 @@ export class GameScene extends Phaser.Scene {
         // input
         this.cursorKeys = this.input.keyboard.createCursorKeys();
         this.input.on('pointermove', (pointer) =>{
-                    this.basket.x = pointer.x;
+                    this.basket.body.x = pointer.x - this.basket.width /2;
                 });
         
         // create candy group
@@ -71,9 +71,9 @@ export class GameScene extends Phaser.Scene {
         this.timerText.setText(Math.round(this.timedEvent.getRemainingSeconds()).toString(10));
 
         if (this.cursorKeys.left.isDown) {
-            this.basket.setVelocityX(-350);
+            this.basket.setVelocityX(-450);
         } else if (this.cursorKeys.right.isDown) {
-            this.basket.setVelocityX(350);
+            this.basket.setVelocityX(450);
         } else {
             this.basket.setVelocityX(0);
         }
