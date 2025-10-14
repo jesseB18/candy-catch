@@ -64,31 +64,34 @@ export class GameScene extends Phaser.Scene {
         this.cameras.main.fadeIn(500);
     }
 
-    update() {
-        if (this.gameIsOver) {
-            this.basket.setVelocityX(0);
-            return;
-        }
-        this.timerText.setText(Math.round(this.timedEvent.getRemainingSeconds()).toString(10));
+update() {
+    if (this.gameIsOver) {
+        this.basket.setVelocityX(0);
+        return;
+    }
+    this.timerText.setText(Math.round(this.timedEvent.getRemainingSeconds()).toString(10));
 
-        if (this.cursorKeys.left.isDown) {
-            this.basket.setVelocityX(-450);
-        } else if (this.cursorKeys.right.isDown) {
-            this.basket.setVelocityX(450);
-        } else {
+    if (this.cursorKeys.left.isDown) {
+        this.basket.setVelocityX(-550);
+    } else if (this.cursorKeys.right.isDown) {
+        this.basket.setVelocityX(550);
+    } else if (this.input.pointer1.isDown) {
         const delta = this.targetX - this.basket.x;
         this.basket.setVelocityX(delta * 10);
-        }
-
-        this.candyGroup.getChildren().forEach((child) => {
-            if (!child.active) {
-                return;
-            }
-            if (child.y > this.scale.height + 10) {
-                child.setActive(false).setVisible(false);
-            }
-        });
+    } else {
+        this.basket.setVelocityX(0);
     }
+
+    this.candyGroup.getChildren().forEach((child) => {
+        if (!child.active) {
+            return;
+        }
+        if (child.y > this.scale.height + 10) {
+            child.setActive(false).setVisible(false);
+        }
+    });
+}
+
 
     spawnRandomCandy() {
         /** @type {Phaser.Types.Physics.Arcade.ImageWithDynamicBody} */
